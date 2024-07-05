@@ -1,21 +1,20 @@
 #include <iostream>
+#include <vector>
+#include <numeric>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
 
-    unsigned long long s_1{0};
-    unsigned long long s_2{0};
+    unsigned long long res{0};
+    std::vector<unsigned> s(100);
+    std::iota(s.begin(), s.end(),1);
 
-    for (unsigned long long i{0}; i<100; i++){
-        s_1 += i*i;
+    for(auto it{s.begin()}; (it+1)!=s.end(); it++){
+        res += ((*it) * std::accumulate(it+1u, s.end(), 0ull));
     }
-    for (unsigned long long i{0}; i<100; i++){
-        s_2 += i;
-    }
-    s_2 *= s_2;
 
-    std::cout << s_2 - s_1 << "\r\n";
-
-    // Add code
+    res *= 2;
+    std::cout << res << "\r\n";
+    
 
     return 0;
 }
