@@ -1,18 +1,18 @@
-main: main.o 
-        g++ @flags $^ -o $@
+main: main.o
+	g++ @flags $^ -o $@
 
 main.o: main.cpp
-        g++ -c @flags $^
+	g++ -c @flags $^
 
 
 
 
 .PHONY: clean wipe format
 clean:
-        ls | grep -E ".*\.o$\" | xargs -I{} rm {}
+	ls | grep -E ".*\.o$\" | xargs -I{} rm {}
 wipe: clean
-        if [ -f main ]; then rm main; fi
+	if [ -f main ]; then rm main; fi
 format:
-        clang-format -i main.cpp
-        ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
-        ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
+	clang-format -i main.cpp
+	ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
+	ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
