@@ -1,1 +1,1 @@
--std=c++2a -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -I./include/
+-std=c++2a -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -I./include/ 

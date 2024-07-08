@@ -1,5 +1,5 @@
 main: main.o
-	g++ @flags $^ -o $@
+	g++ @flags $^ -o $@ -lfmt
 
 main.o: main.cpp
 	g++ -c @flags $^
