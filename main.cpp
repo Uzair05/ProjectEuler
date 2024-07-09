@@ -26,6 +26,8 @@ void get_primes(std::vector<unsigned long long>& primes, unsigned long long n) {
             ++i;
         }
     }
+
+    std::cout << "Primed at:\t" << *primes.rbegin() << "\r\n";
 }
 
 int main() {
@@ -39,7 +41,6 @@ int main() {
     std::map<unsigned long long, unsigned> prime_factors{};
     std::vector<unsigned long long> primes{2};
 
-    get_primes(primes, 12372);  // speed up the process; max usuable prime number at 500 thresh is 123723
 
     while (res < number_of_factors_threshold) {
         num += size_n++;
@@ -63,7 +64,7 @@ int main() {
             }
 
             if (n > 1) {
-                get_primes(primes, num);
+                get_primes(primes, (*primes.rbegin())*2); // instead of using nums we try and double the max prime numbers
             }
         }
 
