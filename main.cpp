@@ -36,14 +36,16 @@ int main() {
     unsigned long long num{0};
     unsigned long long size_n{1};
 
-    std::map<unsigned long long, int> prime_factors{};
+    unsigned res{1};
+    std::map<unsigned long long, unsigned> prime_factors{};
     std::vector<unsigned long long> primes{2};
 
-    while (num<10) {
+    while (res<500) {
 
         num += size_n++;
         get_primes(primes, num);
         prime_factors.clear();
+        res = 1u;
 
         auto n{num};
         while(n>1){
@@ -52,7 +54,7 @@ int main() {
                     if (prime_factors.contains(p)){
                         ++prime_factors.at(p);
                     }else{
-                        prime_factors.insert(std::pair<unsigned long long, int>(p, 1));
+                        prime_factors.insert(std::pair<unsigned long long, unsigned>(p, 1u));
                     }
                     n /= p;
                 }
@@ -61,10 +63,12 @@ int main() {
             }
         }
 
-        std::cout << num << std::endl;
-        for(const auto& [k,v]: prime_factors){
-            std::cout << k << ", " << v << "\r\n";
+        
+        for(const auto& [_,v]: prime_factors){
+            res *= (v+1);
         }
+        
+        std::cout << num << ": " << res << std::endl;
     }
 
 
