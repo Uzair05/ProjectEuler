@@ -1,11 +1,10 @@
-main: main.o respo.o
+main: main.o 
 	g++ -o $@ @flags $^ 
 
 main.o: main.cpp
-	g++ -c @flags $^
+	g++ -c $^ @flags
 
-respo.o: src/respo.cpp
-	g++ -c @flags $^
+
 
 
 .PHONY: clean wipe format
