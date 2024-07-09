@@ -1,10 +1,11 @@
-main: main.o
-	g++ @flags $^ -o $@ -lfmt
+main: main.o respo.o
+	g++ -o $@ @flags $^ 
 
 main.o: main.cpp
 	g++ -c @flags $^
 
-
+respo.o: src/respo.cpp
+	g++ -c @flags $^
 
 
 .PHONY: clean wipe format
@@ -14,5 +15,5 @@ wipe: clean
 	if [ -f main ]; then rm main; fi
 format:
 	clang-format -i main.cpp
-	ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
-	ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
+	ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i src/{}
+	ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i include/{}
