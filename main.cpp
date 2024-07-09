@@ -13,18 +13,6 @@ void get_primes(std::vector<unsigned long long>& primes, unsigned long long n) {
                 primes.push_back(i);
             }
         }
-
-        size_t curr_size{
-            primes
-                .size()};  // find one more prime so that we can cut down on redundant calculations
-        auto i{*primes.rbegin() + 1ull};
-        while (primes.size() == curr_size) {
-            if (!std::any_of(primes.begin(), primes.end(),
-                             [&i](const auto& p) { return i % p == 0; })) {
-                primes.push_back(i);
-            }
-            ++i;
-        }
     }
 
     std::cout << "Primed at:\t" << *primes.rbegin() << "\r\n";
