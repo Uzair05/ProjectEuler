@@ -1,0 +1,2 @@
+- Since we cannot hope to aim for brute force solution we're going to aim for pruning branches
+    - We need a mechanism for pruning
