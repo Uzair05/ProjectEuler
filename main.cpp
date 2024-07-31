@@ -2,24 +2,24 @@
 #include <deque>
 
 void multiply(std::deque<unsigned long long>& res, unsigned long long n) {
-    auto carry{0u};
+    auto carry{0ull};
     for(auto& i: res){
         i = (i*n + carry);
-        carry = i/10u;
-        i = i%10u;
+        carry = i/10ull;
+        i = i%10ull;
     }
 
     while (carry > 0){
-        res.push_back(carry%10u);
-        carry = carry/10u;
+        res.push_back(carry%10ull);
+        carry = carry/10ull;
     }
 }
 
 
 void factorial(std::deque<unsigned long long>& res, unsigned long long n){
-    while (n>1){
+    while (n>1ull){
         multiply(res, n);
-        n-=1u;
+        n-=1ull;
     }
 }
 
