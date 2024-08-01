@@ -5,10 +5,15 @@
 
 template <typename T>
 void build_primes(std::vector<T>& primes, T n) {
-    if (primes.empty()) primes.push_back(2);
+    if (primes.size() < 2) {
+        if (primes.empty()) {
+            primes.push_back(2);
+        }
+        primes.push_back(3);
+    }
 
     bool flg;
-    for (auto i{primes.back() + 1}; i < n; i++) {
+    for (auto i{primes.back() + 2}; i < n; i += 2) {
         flg = false;
         for (const auto& p : primes) {
             if (i % p == 0) {
@@ -37,8 +42,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
 
             if (std::binary_search(primes.begin(), primes.end(), acc)) {
                 std::cout << "For Prime: " << acc << "\n";
-                std::for_each(it, it + window_size, [](const auto& n) { std::cout << n << ", "; });
-                std::cout << "\n";
+                // std::for_each(it, it + window_size, [](const auto& n) { std::cout << n << ", "; });
+                // std::cout << "\n";
                 break_flg = true;
                 break;
             }
