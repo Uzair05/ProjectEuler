@@ -40,6 +40,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
         score[i] *= (i + 1ul);
     }
 
+    std::cout << names_list.size() << " " << score.size() << "\n";
+
     std::cout << std::accumulate(score.begin(), score.end(), 0ul) << "\n";
     std::cout << "correct answer:\t" << 871198282 << "\n";
     return 0;
