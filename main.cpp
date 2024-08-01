@@ -20,6 +20,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     while (std::getline(file, buffer, ',')) {
         names_list.push_back(buffer);
     }
+
+    file.close();
     std::sort(names_list.begin(), names_list.end());
 
     std::vector<unsigned long> score{};
@@ -39,6 +41,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     }
 
     std::cout << std::accumulate(score.begin(), score.end(), 0ul) << "\n";
-
+    std::cout << "correct answer:\t" << 871198282 << "\n";
     return 0;
 }
