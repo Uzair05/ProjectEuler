@@ -23,7 +23,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
 
     file.close();
     std::sort(names_list.begin(), names_list.end());
-
+    
     auto idx{0ul};
     std::vector<unsigned long> score{};
     std::transform(names_list.begin(), names_list.end(), std::back_inserter(score),
@@ -36,6 +36,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
                        }
                        return (res * ++idx);
                    });
+    // names_list.clear(); // slows down, buts saves on memory
+
 
     std::cout << std::accumulate(score.begin(), score.end(), 0ul) << "\n";
     std::cout << "correct answer:\t" << 871198282 << "\n";
