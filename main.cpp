@@ -28,7 +28,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
                 (std::binary_search(list_of_abundant.begin(), list_of_abundant.end(), (i - abnd)));
 
             if (flg) {
-                break; //short circuit; could have used reduce or accumulate
+                break;  // short circuit; could have used reduce or accumulate
             }
         }
 
