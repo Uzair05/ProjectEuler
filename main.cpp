@@ -22,25 +22,17 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::iota(list_of_non_abundant_sum.begin(), list_of_non_abundant_sum.end(), 1u);
 
     for (unsigned i{24}; i < non_abundant_limit; i++) {
-        // bool flg{false};
-        // for (const auto& abnd : list_of_abundant) {
-        //     flg |=
-        //         (std::binary_search(list_of_abundant.begin(), list_of_abundant.end(), (i - abnd)));
+        bool flg{false};
+        for (const auto& abnd : list_of_abundant) {
+            flg |=
+                (std::binary_search(list_of_abundant.begin(), list_of_abundant.end(), (i - abnd)));
 
-        //     if (flg) {
-        //         break; //short circuit; could have used reduce or accumulate
-        //     }
-        // }
-
-
-        
-
-        // if (!flg) {
-        if (!std::accumulate(
-            list_of_abundant.begin(), list_of_abundant.end(), false, [&i, &list_of_abundant](bool acc, const unsigned& abnd){
-                return acc | std::binary_search(list_of_abundant.begin(), list_of_abundant.end(), (i - abnd));
+            if (flg) {
+                break; //short circuit; could have used reduce or accumulate
             }
-        )){
+        }
+
+        if (!flg) {
             list_of_non_abundant_sum.push_back(i);
         }
     }
