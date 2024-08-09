@@ -1,4 +1,7 @@
+#include <algorithm>
 #include <iostream>
+#include <numeric>
+#include <set>
 #include <vector>
 
 template <typename T>
@@ -26,33 +29,22 @@ void build_primes(std::vector<T>& primes, T n) {
     }
 }
 
-template <typename T>
-size_t num_of_prime_divisors(std::vector<T>& primes, T n) {
-    std::vector<T> factors{};
-
-    for (const auto& p : primes) {
-        if (n == 0) break;
-        if (n % p == 0) {
-            while (n > 0 && n % p == 0) {
-                n /= p;
-            }
-            factors.push_back(p);
-        }
-    }
-
-    return factors.size();
-}
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::vector<unsigned long long> primes{};
+    std::set<unsigned long long> squares{};
+
+    for (auto i{1ull}; i < 100ull; i++) squares.insert(i * i);
     build_primes(primes, 12'000ull);
 
-    for (auto i{647ull}; i < 1'000'000ull; i++) {
-        if (num_of_prime_divisors(primes, i) == 4ul) {
-            if ((num_of_prime_divisors(primes, i + 1ull) == 4ul) &&
-                (num_of_prime_divisors(primes, i + 2ull) == 4ul) &&
-                (num_of_prime_divisors(primes, i + 3ull) == 4ul)) {
-                std::cout << "Answer is:\t" << i << "\n";
+    // dont have to test for odd if we only generate odd numbers
+    for (auto i{13ull}; i < 10'000ull; i += 2) {
+        // composite numbers are non - primes which are greater than 1
+        if (!std::binary_search(primes.begin(), primes.end(), i)) {
+            if (!std::any_of(primes.begin(), primes.end(), [&i, &squares](const auto& p) {
+                    // relying on short circuiting for branchless programming
+                    return ((p < i) && ((i - p) % 2ull == 0) && (squares.contains((i - p) / 2ull)));
+                })) {
+                std::cout << "Answer:\t" << i << "\n";
                 break;
             }
         }
