@@ -28,28 +28,36 @@ void build_primes(std::vector<T>& primes, T n) {
     }
 }
 
+template <typename T>
+size_t num_of_prime_divisors(std::vector<T>& primes, T n) {
+    std::vector<T> factors{};
+
+    for (const auto& p : primes) {
+        if (n == 0) break;
+        if (n % p == 0) {
+            while (n > 0 && n % p == 0) {
+                n /= p;
+            }
+            factors.push_back(p);
+        }
+    }
+
+    return factors.size();
+}
+
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::vector<unsigned long long> primes{};
+    build_primes(primes, 12'000ull);
 
-    build_primes(primes, 1'000'000ull);
-    const auto last_prime{primes.back()};
-
-    bool break_flg{false};
-    for (int window_size{static_cast<int>(primes.size() - 1)}; window_size > 20; window_size--) {
-        for (auto it{primes.begin()}; it != (primes.end() - window_size); it++) {
-            auto acc = std::accumulate(it, it + window_size, 0ull);
-            if (acc > last_prime) break;
-
-            if (std::binary_search(primes.begin(), primes.end(), acc)) {
-                std::cout << "For Prime: " << acc << "\n";
-                // std::for_each(it, it + window_size, [](const auto& n) { std::cout << n << ", "; });
-                // std::cout << "\n";
-                break_flg = true;
-                break;
-            }
+    for (auto i{647ull}; i < 1'000'000ull; i++) {
+        if (num_of_prime_divisors(primes, i) == 4ul){
+            if ((num_of_prime_divisors(primes, i+1ull) == 4ul) && 
+                (num_of_prime_divisors(primes, i+2ull) == 4ul) && 
+                (num_of_prime_divisors(primes, i+3ull) == 4ul)){
+                    std::cout << "Answer is:\t" << i << "\n";
+                    break;
+                }
         }
-
-        if (break_flg) break;
     }
 
     return 0;
