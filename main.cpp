@@ -1,8 +1,5 @@
-#include <algorithm>
 #include <iostream>
-#include <numeric>
 #include <vector>
-#include <future>
 
 template <typename T>
 void build_primes(std::vector<T>& primes, T n) {
@@ -50,17 +47,14 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::vector<unsigned long long> primes{};
     build_primes(primes, 12'000ull);
 
-
-
     for (auto i{647ull}; i < 1'000'000ull; i++) {
-        if (num_of_prime_divisors(primes, i) == 4ul){
-            if ((num_of_prime_divisors(primes, i+1ull) == 4ul) && 
-                (num_of_prime_divisors(primes, i+2ull) == 4ul) && 
-                (num_of_prime_divisors(primes, i+3ull) == 4ul)){
-                    std::cout << "Answer is:\t" << i << "\n";
-                    break;
-                }
-            
+        if (num_of_prime_divisors(primes, i) == 4ul) {
+            if ((num_of_prime_divisors(primes, i + 1ull) == 4ul) &&
+                (num_of_prime_divisors(primes, i + 2ull) == 4ul) &&
+                (num_of_prime_divisors(primes, i + 3ull) == 4ul)) {
+                std::cout << "Answer is:\t" << i << "\n";
+                break;
+            }
         }
     }
 
