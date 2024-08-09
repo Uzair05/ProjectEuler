@@ -5,7 +5,27 @@
 using pyr = std::vector<std::vector<unsigned long long>>;
 
 // To solve recursively we'd need a data structure that can give us sub-pyramids
+// We'll create a vector of structures which can pointer to structs in the next vectors
+// Recursively solve for subtrees only keeping the 5 highest subtrees. 
+//     --> can adjust window depending on changes
+//     --> increasing window size until no change is detected.
 
+// Figure out how pointers work
+
+
+
+struct node{
+    unsigned long long val{};
+    node* l{};
+    node* r{};
+
+    node(unsigned long long val_):val{val_}, l{nullptr}, r{nullptr}{}
+    ~node(){
+        std::cout << "Deleting :\t" << val << "\n";
+        delete l;
+        delete r;
+    }
+};
 
 
 
@@ -31,6 +51,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
         {63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
         {04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23}
     };
+    
+
 
 
     return 0;
