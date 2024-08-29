@@ -47,6 +47,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
                 {63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
                 {04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23}};
 
+
+
     // Filling Pyramid into a tree like structure for easy traversal
     std::shared_ptr<node> head = std::shared_ptr<node>(new node(pyramid[0][0]));
     std::vector<std::shared_ptr<node>> prev_row{head};
@@ -64,6 +66,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
         prev_row = curr_row;
         curr_row.clear();
     }
+    prev_row.clear(); // cleanup
 
     std::cout << evaluate_pyramid(head) << "\n\n\n";
 
