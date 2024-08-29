@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <memory>
 
 
 using pyr = std::vector<std::vector<unsigned long long>>;
@@ -10,22 +11,28 @@ using pyr = std::vector<std::vector<unsigned long long>>;
 //     --> can adjust window depending on changes
 //     --> increasing window size until no change is detected.
 
-// Figure out how pointers work
-
-
 
 struct node{
-    unsigned long long val{};
-    node* l{};
-    node* r{};
-
-    node(unsigned long long val_):val{val_}, l{nullptr}, r{nullptr}{}
-    ~node(){
-        std::cout << "Deleting :\t" << val << "\n";
-        delete l;
-        delete r;
-    }
+    unsigned long long val;
+    std::shared_ptr<node>l;
+    std::shared_ptr<node>r;
+    
+    node(unsigned long long v):val{v}, l{nullptr}, r{nullptr}{}
 };
+
+
+
+
+unsigned long long evaluate_pyramid(std::shared_ptr<node> head){
+
+    if ((head->l == nullptr) && (head->r == nullptr)) return head->val;
+
+    unsigned long long left_val {(head->l != nullptr) ? evaluate_pyramid(head->l) : 0};
+    unsigned long long right_val{(head->r != nullptr) ? evaluate_pyramid(head->r) : 0};
+
+    return head->val + ((left_val > right_val) ? left_val : right_val);
+}
+
 
 
 
@@ -51,9 +58,30 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
         {63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
         {04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23}
     };
+
+
     
 
+    std::shared_ptr<node> head = std::shared_ptr<node>(new node(pyramid[0][0]));
+    std::vector<std::shared_ptr<node>> prev_row{head};
+    std::vector<std::shared_ptr<node>> curr_row{};
 
+    for(size_t row{1}; row < pyramid.size(); row++){
+        for(size_t idx{0}; idx<(row+1); idx++){
+            std::shared_ptr<node> tmp{new node(pyramid[row][idx])};
+
+
+            if (idx!=0) prev_row[idx-1]->r = tmp;
+            if (idx!=row) prev_row[idx]->l = tmp; 
+
+            curr_row.emplace_back(tmp);
+        }
+        prev_row = curr_row;
+        curr_row.clear();
+    }
+
+
+    std::cout << evaluate_pyramid(head) << "\n\n\n";
 
     return 0;
 }
