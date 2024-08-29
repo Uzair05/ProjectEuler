@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <map>
 
 
 using pyr = std::vector<std::vector<unsigned long long>>;
@@ -12,12 +13,16 @@ using pyr = std::vector<std::vector<unsigned long long>>;
 //     --> increasing window size until no change is detected.
 
 
+
 struct node{
     unsigned long long val;
+
+    bool has_val;
+    unsigned long long acc;
     std::shared_ptr<node>l;
     std::shared_ptr<node>r;
     
-    node(unsigned long long v):val{v}, l{nullptr}, r{nullptr}{}
+    node(unsigned long long v):val{v}, l{nullptr}, r{nullptr}, acc{0}, has_val{false}{}
 };
 
 
@@ -25,12 +30,18 @@ struct node{
 
 unsigned long long evaluate_pyramid(std::shared_ptr<node> head){
 
-    if ((head->l == nullptr) && (head->r == nullptr)) return head->val;
+
+    if ((head->l == nullptr) && (head->r == nullptr)) return head->val;    
+    if (head->has_val) return head->acc;
 
     unsigned long long left_val {(head->l != nullptr) ? evaluate_pyramid(head->l) : 0};
     unsigned long long right_val{(head->r != nullptr) ? evaluate_pyramid(head->r) : 0};
+    unsigned long long val{head->val + ((left_val > right_val) ? left_val : right_val)};
 
-    return head->val + ((left_val > right_val) ? left_val : right_val);
+    head->has_val = true;
+    head->acc = val;
+
+    return val;
 }
 
 
@@ -39,7 +50,7 @@ unsigned long long evaluate_pyramid(std::shared_ptr<node> head){
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
-    // Add code
+
 
     pyr pyramid{
         {75},
@@ -69,7 +80,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
     for(size_t row{1}; row < pyramid.size(); row++){
         for(size_t idx{0}; idx<(row+1); idx++){
             std::shared_ptr<node> tmp{new node(pyramid[row][idx])};
-
+            
 
             if (idx!=0) prev_row[idx-1]->r = tmp;
             if (idx!=row) prev_row[idx]->l = tmp; 
