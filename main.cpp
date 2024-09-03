@@ -16,11 +16,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
 
     generate_pentagonals(res, 10'000ul);
 
-    for(size_t i{0}; i < res.size(); i++){
-        for(size_t j{i+1}; j < res.size(); j++){
-            if (std::binary_search(res.begin(), res.end(), (res[i]+res[j]))){
-                if (std::binary_search(res.begin(), res.end(), (res[j]-res[i]))){
-                    D = (D < (res[j]-res[i])) ? D : (res[j]-res[i]);
+    for(auto i{res.begin()}; i!=res.end(); i++){
+        for(auto j{std::next(i)}; j!=res.end(); j++){
+            if (std::binary_search(std::next(j), res.end(), (*i + *j))){
+                if (std::binary_search(res.begin(), std::next(j), (*j - *i))){
+                    D = (D < (*j-*i)) ? D : (*j-*i);
                 }
             }
         }
