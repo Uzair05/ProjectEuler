@@ -130,8 +130,6 @@ namespace Sudoku {
         // Choose the options available for that cell
         auto options{possible_cells[0].second};
 
-
-
         bool solved_flag{false};
         for (const auto& option : options) {
             b[cell.row][cell.col] = option;
