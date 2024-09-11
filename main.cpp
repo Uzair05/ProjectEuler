@@ -2,6 +2,7 @@
 #include <array>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <numeric>
 #include <optional>
 #include <set>
@@ -14,6 +15,13 @@ namespace Sudoku {
     struct loc {
         size_t row{0};
         size_t col{0};
+
+        bool operator==(const loc& rhs) {
+            return ((this->row == rhs.row) && (this->col == rhs.col));
+        }
+        bool operator!=(const loc& rhs) {
+            return ((this->row != rhs.row) || (this->col != rhs.col));
+        }
     };
 
     bool readBoard(std::vector<Board>& dst, const std::string& path) {
@@ -122,9 +130,7 @@ namespace Sudoku {
         // Choose the options available for that cell
         auto options{possible_cells[0].second};
 
-        /**
-         * Insert Sorting Algorithm for options to respect LCV
-         */
+
 
         bool solved_flag{false};
         for (const auto& option : options) {
@@ -149,7 +155,6 @@ namespace Sudoku {
 
 using std::literals::string_literals::operator""s;
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
-    
     std::vector<Sudoku::Board> list_of_games{};
     const auto boards_path{"./p096_sudoku.txt"s};
     if (Sudoku::readBoard(list_of_games, boards_path)) {
@@ -163,11 +168,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
         }
     }
 
-
-    std::cout << std::accumulate(list_of_games.begin(), list_of_games.end(), 0, [](auto acc,
-    const auto& board){
-        return acc + ((board[0][0]*100) + (board[0][1]*10) + board[0][2]);
-    }) << std::endl;
+    std::cout << std::accumulate(
+                     list_of_games.begin(), list_of_games.end(), 0,
+                     [](auto acc, const auto& board) {
+                         return acc + ((board[0][0] * 100) + (board[0][1] * 10) + board[0][2]);
+                     })
+              << std::endl;
 
     return 0;
 }
