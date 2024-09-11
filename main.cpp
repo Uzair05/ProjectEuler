@@ -89,6 +89,39 @@ namespace Sudoku {
         return options;
     }
 
+    void inline get_empty_cell(const Board& b, std::vector<std::pair<loc, std::vector<int>>>& possible_cells){
+        possible_cells.clear();
+        for(size_t idx_row{0ul}; idx_row<9; idx_row++){
+            for(size_t idx_col{0ul}; idx_col<9; idx_col++){
+                if (b[idx_row][idx_col]<0){
+                    possible_cells.emplace_back(
+                        std::pair<loc, std::vector<int>>(loc{idx_row, idx_col}, genOptions(b, {idx_row, idx_col}))
+                    );
+                }
+            }
+        }
+    }
+
+    bool solveBoard(Board& b){
+        std::vector<std::pair<loc, std::vector<int>>> possible_cells{};
+        get_empty_cell(b, possible_cells);
+        if (possible_cells.empty()) return true;
+        // end if no empty cells remaining
+
+        std::sort(possible_cells.begin(), possible_cells.end(), [](const auto& a, const auto& b){
+            return a.second.size() < b.second.size();
+        });
+
+        // Choose cell with least number of options
+        auto cell{possible_cells[0].first};
+        auto options{possible_cells[0].second};
+
+
+
+
+
+    }
+
 };  // namespace Sudoku
 
 
@@ -96,10 +129,10 @@ namespace Sudoku {
  * Using for loop go through each board
  * Using recursion go through each missing on board --> Backtracking
  *  Build all options of all empty cells
- *      Heuristics:
- *          * Fewest Legal values --> Choose which cell to work on
- *          * Least constraining on other values --> Choose order of values to back trace
- *          * 
+ *      Heuristics: <https://www.baeldung.com/cs/csp>
+ *          [x] Fewest Legal values --> Choose which cell to work on
+ *          [ ] Least constraining on other values --> Choose order of values to back trace
+ *          *
  */
 
 using std::literals::string_literals::operator""s;
