@@ -95,32 +95,6 @@ namespace Sudoku {
         return options;
     }
 
-    bool valid_solution(const Board& b) {
-        std::set<int> line_holder{};
-        for (const auto& b_r : b) {
-            line_holder.clear();
-            for (const auto& cell : b_r) {
-                if (cell <= 0) {
-                    return false;
-                }
-                line_holder.insert(cell);
-            }
-            if (line_holder.size() != 9) return false;
-        }
-
-        for (size_t idx_c{0ul}; idx_c < 9ul; idx_c++) {
-            line_holder.clear();
-            for (size_t idx_r{0ul}; idx_r < 9ul; idx_r++) {
-                if (b[idx_r][idx_c] <= 0) {
-                    return false;
-                }
-                line_holder.insert(b[idx_r][idx_c]);
-            }
-        }
-        if (line_holder.size() != 9) return false;
-        return true;
-    }
-
     void inline get_empty_cell(const Board& b,
                                std::vector<std::pair<loc, std::vector<int>>>& possible_cells) {
         possible_cells.clear();
