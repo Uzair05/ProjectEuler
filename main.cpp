@@ -3,13 +3,13 @@
 #include <map>
 #include <vector>
 
-
-bool is_prime_judgment(const unsigned long long n, const std::vector<unsigned long long>& primes){
-    return std::none_of(primes.begin(), primes.end(), [&n](const auto& p){return n%p == 0ull;});
+bool is_prime_judgment(const unsigned long long n, const std::vector<unsigned long long>& primes) {
+    return std::none_of(primes.begin(), primes.end(),
+                        [&n](const auto& p) { return n % p == 0ull; });
 }
 
 std::vector<unsigned long long>& generate_primes(std::vector<unsigned long long>& primes,
-                                                 size_t range, unsigned long long upper_limit=1'000'000'000) {
+                                                 size_t range) {
     if (primes.empty()) {
         primes.push_back(2ull);
         primes.push_back(3ull);
@@ -19,10 +19,6 @@ std::vector<unsigned long long>& generate_primes(std::vector<unsigned long long>
         if (std::none_of(primes.begin(), primes.end(),
                          [&idx](const auto& a) { return idx % a == 0; })) {
             primes.push_back(idx);
-
-            if ((*primes.rbegin())*(*std::next(primes.rbegin())) > upper_limit){
-                break;
-            }
         }
     }
 
@@ -50,23 +46,16 @@ inline bool is_pandigital(unsigned long long n) {
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::vector<unsigned long long> primes{};
-    generate_primes(primes, 50'000ul);
+    generate_primes(primes, 32'000ul);
 
-    std::cout << "Size of primes collection is:\t" << primes.size() << "\n";
-    std::cout << "Largest of primes collection is:\t" << primes.back() << "\n";
-
-    for(auto idx{8'000'000ull}; idx>0ull; idx--){
-        if (is_pandigital(idx)){
-            std::cout << "Collection Pandigital Found:\t" << idx << "\n";
-            if (is_prime_judgment(idx, primes)){
+    for (auto idx{8'000'000ull}; idx > 0ull; idx--) {
+        if (is_pandigital(idx)) {
+            if (is_prime_judgment(idx, primes)) {
                 std::cout << "Collection Pandigital Prime Found:\t" << idx << "\n";
-
                 break;
             }
         }
     }
 
-    
-    
     return 0;
 }
