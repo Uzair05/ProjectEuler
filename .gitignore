@@ -2,8 +2,8 @@ main.o
 main.exe
 main
 
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux,visualstudiocode,visualstudio,visualbasic,c++,c,python,clion,vim,emacs,notepadpp,pycharm,intellij
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux,visualstudiocode,visualstudio,visualbasic,c++,c,python,clion,vim,emacs,notepadpp,pycharm,intellij
+# Created by https://www.toptal.com/developers/gitignore/api/c,c++,vim,clion,emacs,linux,macos,python,pycharm,windows,intellij,notepadpp,visualbasic,visualstudio,visualstudiocode,cmake
+# Edit at https://www.toptal.com/developers/gitignore?templates=c,c++,vim,clion,emacs,linux,macos,python,pycharm,windows,intellij,notepadpp,visualbasic,visualstudio,visualstudiocode,cmake
 
 ### C ###
 # Prerequisites
@@ -190,6 +190,23 @@ fabric.properties
 # Azure Toolkit for IntelliJ plugin
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -682,6 +699,11 @@ $RECYCLE.BIN/
 
 ### VisualStudioCode ###
 .vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -1090,4 +1112,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,visualstudiocode,visualstudio,visualbasic,c++,c,python,clion,vim,emacs,notepadpp,pycharm,intellij
+# End of https://www.toptal.com/developers/gitignore/api/c,c++,vim,clion,emacs,linux,macos,python,pycharm,windows,intellij,notepadpp,visualbasic,visualstudio,visualstudiocode,cmake
