@@ -1,11 +1,15 @@
-main: main.o
+main: main.o pandigital.o large_number.o
 	g++ @flags $^ -o $@
 
 main.o: main.cpp
 	g++ -c @flags $^
 
 
+pandigital.o: src/pandigital.cpp 
+	g++ @flags -c $^
 
+large_number.o: src/large_number.cpp 
+	g++ @flags -c $^
 
 .PHONY: clean wipe format
 clean:
@@ -14,5 +18,5 @@ wipe: clean
 	if [ -f main ]; then rm main; fi
 format:
 	clang-format -i main.cpp
-	ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
-	ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i {}
+	ls src/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i src/{}
+	ls include/ | grep -E ".*\.((c|h)pp|h)$\" | xargs -I{} clang-format -i include/{}
