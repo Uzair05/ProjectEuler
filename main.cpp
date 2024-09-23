@@ -45,7 +45,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
     while(!pandigital_dual(num[i%3])){
         add(num[i%3], num[(i+1)%3], num[(i+2)%3]);
         i++;
-        
     }
 
     std::cout << i << "\n";

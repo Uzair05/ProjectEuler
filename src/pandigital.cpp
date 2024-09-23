@@ -21,8 +21,8 @@ bool pandigital_end(const std::vector<unsigned>& n) {
 }
 
 bool pandigital_dual(const std::vector<unsigned>& n) { 
-    auto e = std::async(std::launch::async, pandigital_end, n);
-    auto f = std::async(std::launch::async, pandigital_start, n);
+    auto e = std::async(std::launch::async, [](const std::vector<unsigned>& n){return pandigital_end(n);}, n);
+    auto f = std::async(std::launch::async, [](const std::vector<unsigned>& n){return pandigital_start(n);}, n);
 
     e.wait(); f.wait();
     return (n.size()>=9ul && e.get() && f.get()); 

@@ -3,6 +3,6 @@
 
 bool pandigital_start(std::vector<unsigned>& n);
 bool pandigital_end(std::vector<unsigned>& n);
-bool pandigital_dual(std::vector<unsigned>& n);
+bool pandigital_dual(const std::vector<unsigned>& n);
 
 #endif
