@@ -1,32 +1,29 @@
 #include <set>
 #include <vector>
+#include <future>
 #include "pandigital.hpp"
 
 
-bool pandigital_start(std::vector<unsigned>& n) {
+bool pandigital_start(const std::vector<unsigned>& n) {
     std::set<unsigned> cs{};
-    for (auto it{n.rbegin()}; it != n.rend() && it != (n.rbegin() + 9); it++) {
-        if (cs.contains(*it)) {
-            return false;
-        } else {
-            cs.insert(*it);
-        }
+    for (auto it{n.rbegin()}; it != (std::distance(n.rbegin(), n.rend())>=9 ? n.rbegin() + 9 : n.rend()); it++) {
+        cs.insert(*it);
     }
-    return !cs.contains(0);
+    return (cs.size() == 9ul && !cs.contains(0));
 }
 
-bool pandigital_end(std::vector<unsigned>& n) {
+bool pandigital_end(const std::vector<unsigned>& n) {
     std::set<unsigned> cs{};
-    for (auto it{n.begin()}; it != n.end() && it != (n.begin() + 9); it++) {
-        if (cs.contains(*it)) {
-            return false;
-        } else {
-            cs.insert(*it);
-        }
+    for (auto it{n.begin()}; it != (std::distance(n.begin(), n.end())>=9 ? n.begin() + 9 : n.end()); it++) {
+        cs.insert(*it);
     }
-    return !cs.contains(0);
+    return (cs.size() == 9ul && !cs.contains(0));
 }
 
-bool pandigital_dual(std::vector<unsigned>& n) { 
-    return (n.size()>=9ul && pandigital_end(n) && pandigital_start(n)); 
+bool pandigital_dual(const std::vector<unsigned>& n) { 
+    auto e = std::async(std::launch::async, pandigital_end, n);
+    auto f = std::async(std::launch::async, pandigital_start, n);
+
+    e.wait(); f.wait();
+    return (n.size()>=9ul && e.get() && f.get()); 
 }

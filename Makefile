@@ -1,4 +1,4 @@
-main: main.o pandigital.o large_number.o
+main: main.o pandigital.o
 	g++ @flags $^ -o $@
 
 main.o: main.cpp
@@ -8,8 +8,6 @@ main.o: main.cpp
 pandigital.o: src/pandigital.cpp 
 	g++ @flags -c $^
 
-large_number.o: src/large_number.cpp 
-	g++ @flags -c $^
 
 .PHONY: clean wipe format
 clean:
