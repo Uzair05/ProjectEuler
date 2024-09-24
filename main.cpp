@@ -47,24 +47,21 @@ ull dec_denom(unsigned digit, unsigned depth, std::map<unsigned, std::map<unsign
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::map<unsigned, std::map<unsigned, ull>> m_1{};
-    ull acc_i{inc_denom(1, 11, m_1)};
-    for (auto i{10u}; i > 0u; i--) {
+
+    ull acc_i{0ull};
+    for (auto i{6u}; i > 3u; i--) {
         acc_i += inc_denom(9u, i, m_1);
     }
     m_1.clear();
 
-    std::map<unsigned, std::map<unsigned, ull>> m_2{};
-    // ull acc_d{dec_denom(1, 11, m_2)};
     ull acc_d{0ull};
-    for (auto i{11u}; i > 0u; i--) {
-        acc_d += dec_denom(0u, i, m_2);
+    for (auto i{7u}; i > 4u; i--) {
+        acc_d += dec_denom(0u, i, m_1);
     }
+    m_1.clear();
 
-    m_2.clear();
-
-    std::cout << acc_i + acc_d << "\n";
+    std::cout << acc_i + acc_d + dec_denom(1u, 7u, m_1) << "\n"; // Slightly less than 277032 (-30); Consider non bouncy under 1000
     std::cout << std::numeric_limits<ull>::max() << "\n";
-    std::cout << dec_denom(9u, 11u, m_2); << "\n";
     
     return 0;
 }
