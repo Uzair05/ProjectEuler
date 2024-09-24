@@ -26,15 +26,22 @@ ull inc_denom(unsigned digit, unsigned depth, std::map<unsigned, std::map<unsign
 }
 
 ull dec_denom(unsigned digit, unsigned depth, std::map<unsigned, std::map<unsigned, ull>>& m) {
+
+    std::cout << "Enter:\t" << digit << ",\t" << depth << "\n";
+
     if (depth == 1u) return 1ull;
     if (digit == 9u) return 1ull;
+
+    std::cout << "Passed Terminals\n";
 
     if (m.contains(depth) && m.at(depth).contains(digit)) {
         return m.at(depth).at(digit);
     }
 
+    std::cout << "Passed Memoization\n";
+
     ull res{0ull};
-    for (unsigned idx{9u}; idx >= digit; idx--) res += dec_denom(idx, depth - 1, m);
+    for (unsigned idx{digit}; idx <= 9u; idx++) res += dec_denom(idx, depth - 1, m);
 
     if (m.contains(depth)) {
         m.at(depth).insert(std::pair<unsigned, ull>(digit, res));
