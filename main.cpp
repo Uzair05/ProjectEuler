@@ -57,7 +57,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char const* argv[]) {
     std::map<unsigned, std::map<unsigned, ull>> m_2{};
     ull acc_d{dec_denom(1, 11, m_2)};
     for (auto i{10u}; i > 0u; i--) {
-        acc_d += dec_denom(9, i, m_2);
+        acc_d += dec_denom(0, i, m_2);
     }
     m_2.clear();
 
