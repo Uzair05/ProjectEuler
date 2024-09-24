@@ -1,83 +1,72 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <future>
+#include <limits>
+#include <map>
 
-bool num_inc(const std::vector<unsigned>& n){
-    if (n[0] < n.back()) return false;
+using ull = unsigned long long;
 
-    for(size_t i{0ul}; i<(n.size()-1); i++){
-        if (n[i] < n[i+1]){
-            return false;
-        }
+ull inc_denom(unsigned digit, unsigned depth, std::map<unsigned, std::map<unsigned, ull>>& m){
+    if (depth == 1u) return 1ull;
+    if (digit == 0u) return 1ull;
+
+    if (m.contains(depth) && m.at(depth).contains(digit)){
+        return m.at(depth).at(digit);
     }
-    return true;
+
+    ull res{0ull};
+    for(unsigned idx{0u}; idx<=digit; idx++) res += inc_denom(idx, depth-1, m);
+
+    if (m.contains(depth)){
+        m.at(depth).insert(std::pair<unsigned, ull>(digit, res));
+    }else{
+        auto m_ = std::map<unsigned, ull>{{digit, res}};
+        m.insert(std::pair<unsigned, std::map<unsigned, ull>>(depth, m_));
+    }
+
+    return res;
 }
 
-bool num_dec(const std::vector<unsigned>& n){
-    if (n[0] > n.back()) return false;
+ull dec_denom(unsigned digit, unsigned depth, std::map<unsigned, std::map<unsigned, ull>>& m){
+    if (depth == 1u) return 1ull;
+    if (digit == 9u) return 1ull;
 
-    for(size_t i{0ul}; i<(n.size()-1); i++){
-        if (n[i] > n[i+1]){
-            return false;
-        }
-    }
-    return true;
-}
-
-bool num_bouncy(const std::vector<unsigned>& n){
-    // auto a = std::async(std::launch::async, [](const std::vector<unsigned>& n_){return num_dec(n_);}, n);
-    // auto b = std::async(std::launch::async, [](const std::vector<unsigned>& n_){return num_inc(n_);}, n);
-
-    // a.wait(); b.wait();
-    // return !(a.get() || b.get());
-
-    return !(num_dec(n) || num_inc(n));
-}
-
-
-void increment(std::vector<unsigned>& n){
-
-    unsigned res{0u};
-    unsigned carry{1u};
-    for(auto& c: n){
-        res = c + carry;
-        c = res%10;
-        carry = res/10u;
-
-        if (carry==0u) break;
+    if (m.contains(depth) && m.at(depth).contains(digit)){
+        return m.at(depth).at(digit);
     }
 
-    while(carry>0){
-        n.push_back(carry%10u);
-        carry /= 10u;
+    ull res{0ull};
+    for(unsigned idx{9u}; idx>=digit; idx--) res += dec_denom(idx, depth-1, m);
+
+    if (m.contains(depth)){
+        m.at(depth).insert(std::pair<unsigned, ull>(digit, res));
+    }else{
+        auto m_ = std::map<unsigned, ull>{{digit, res}};
+        m.insert(std::pair<unsigned, std::map<unsigned, ull>>(depth, m_));
     }
 
+    return res;
 }
 
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char const *argv[]) {
 
-    std::vector<unsigned> num{0u, 0u, 1u};
-    std::vector<unsigned> counter{0u};
-
-
-    auto k = 0ull;
-    for(auto j{0ull}; j<10'000'000'000; j++){
-        for(auto i{0ull}; i<10'000'000'000; i++){
-            // increment(num);
-            // if (!num_bouncy(num)) increment(counter);
-            k++;
-        }
-        k = 0ull;
-        std::cout << j << "\n";
+    std::map<unsigned, std::map<unsigned, ull>> m_1{};
+    ull acc_i{inc_denom(1,11,m_1)};
+    for(auto i{10u}; i>0u; i--){
+        acc_i += inc_denom(9, i, m_1);
     }
+    m_1.clear();
 
-    std::cout << "\n\n\n";
-    for(auto it{counter.rbegin()}; it!=counter.rend(); it++){
-        std::cout << *it;
-    }std::cout << "\n";
+    std::map<unsigned, std::map<unsigned, ull>> m_2{};
+    ull acc_d{dec_denom(1,11,m_2)};
+    for(auto i{10u}; i>0u; i--){
+        acc_d += dec_denom(9, i, m_2);
+    }
+    m_2.clear();
 
+
+
+    std::cout << acc_i + acc_d << "\n";
+    std::cout << std::numeric_limits<ull>::max() << "\n";
     
     return 0;
 }
