@@ -65,5 +65,6 @@
         "optional": "cpp",
         "typeindex": "cpp",
         "variant": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }
