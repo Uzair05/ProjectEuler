@@ -18,12 +18,14 @@ ull inc_denom(std::map<unsigned, std::map<unsigned, ull>>& m, unsigned depth, un
                 res += inc_denom(m, depth-1, i, false);
             }
         }
+    }else{
+        for(auto i{digit}; i <= 9u; i++){
+            res += inc_denom(m, depth-1, i, false);
+        }
     }
 
 
-    for(auto i{digit}; i <= 9u; i++){
-        res += inc_denom(m, depth-1, i, false);
-    }
+    
     m.insert(std::pair(depth, std::map<unsigned, ull>{{digit, res}}));
     return res;
     
